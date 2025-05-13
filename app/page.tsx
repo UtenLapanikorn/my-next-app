@@ -4,14 +4,14 @@ import MenuBar from "@/components/MenuBar";
 export default function IndexPage() {
   return (
     <div>
-      <MenuBar />
+      <MenuBar page={"หน้าแรก"} />
       <div className="section1-box">
         <h1 className="section1-name mitr-semibold">Hey I'm Pleum</h1>
         <p className="section1-info mitr-regular">
           I'm Rajamangala University of Technology Krungthep.
         </p>
-        <img className="section1-picture" src="profile.png" />
-        <p className="section1-decsciption kanit-thin">
+        <img className="flex justify-center" src="https://images.genius.com/ac965cdd210d17ffc0b18aa77c56e200.1000x1000x1.jpg" />
+        <p className="section1-decsciption mitr-regular">
           ชอบฟังเพลง เล่นเกม อ่านมังงะ
         </p>
       </div>
