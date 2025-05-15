@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import ImageProfile from "@/components/ImageProfile";
 import MenuBar from "@/components/MenuBar";
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function UseEffectPage() {
   const [movieList, setMovieList] = useState([]);
@@ -14,30 +14,48 @@ export default function UseEffectPage() {
         "https://api.themoviedb.org/3/trending/all/week?api_key=229a6a0f891df5bf1176a4668af885c6"
       )
       .then((response) => {
-        console.log(response);
-        setMovieList(response.data.results);
-      })
+        
+        const filtered = response.data.results.filter(
+          (item: { media_type?: string }) => item.media_type === "tv"
+        );
+        setMovieList(filtered);
+      });
   }, []);
-  console.log(movieList)
-
+  
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100">
       <MenuBar page={"เรียนรู้ useEffect"} />
-      <div className="p-4 bg-blue-500 w-50">
-      {movieList.map((item: {
-        poster_path?: string;
-        title?: string;
-        overview?: string;
-        name?: string;
-      }, index) => (
-        <div className="bg-blue-500 w-xl">
-          <ImageProfile src={item.poster_path}/>
-            <h2 className="text-center">{item.title}</h2>
-            <h2 className="text-center">{item.name}</h2>
-            <p className="text-center">{item.overview}</p>
-        </div>
-      ))}
+
+      <div className="bg-amber-200 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {movieList.map((item: {
+          poster_path?: string;
+          title?: string;
+          overview?: string;
+          name?: string;
+        }, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <ImageProfile
+              src={
+                item.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                  : "/no-image.png" // fallback image
+              }
+            />
+            <div className="p-4">
+              <h2 className="text-black text-lg font-semibold text-center">
+                {item.title || item.name}
+              </h2>
+              <p className="text-sm text-black mt-2 text-center">
+                {item.overview || "ไม่มีคำอธิบาย"}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
+
       <Footer />
     </div>
   );
