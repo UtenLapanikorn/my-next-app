@@ -1,5 +1,6 @@
 "use client";
 import Footer from "@/components/Footer";
+import ImageProfile from "@/components/ImageProfile";
 import MenuBar from "@/components/MenuBar";
 import axios from "axios";
 import { use, useEffect, useState } from "react";
@@ -23,15 +24,20 @@ export default function UseEffectPage() {
     <div>
       <MenuBar page={"เรียนรู้ useEffect"} />
       <div className="p-4 bg-blue-500 w-50">
-        <h2 className="text-center">หนังดี</h2>
-        <p className="text-center">หนัง</p>
-      </div>
-      {movieList.map((item, index) => (
-        <div className="bg-blue-50 w-xl">
-            <h2 className="text-center">(item.title)</h2>
-            <p className="text-center">(item.overview)</p>
+      {movieList.map((item: {
+        poster_path?: string;
+        title?: string;
+        overview?: string;
+        name?: string;
+      }, index) => (
+        <div className="bg-blue-500 w-xl">
+          <ImageProfile src={item.poster_path}/>
+            <h2 className="text-center">{item.title}</h2>
+            <h2 className="text-center">{item.name}</h2>
+            <p className="text-center">{item.overview}</p>
         </div>
       ))}
+      </div>
       <Footer />
     </div>
   );
